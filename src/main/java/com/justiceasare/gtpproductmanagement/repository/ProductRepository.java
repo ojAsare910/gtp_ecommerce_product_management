@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -19,6 +17,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Boolean existsProductByDescription(String description);
 
     Boolean existsProductByCategoryId(Long category_id);
+
+    @Query(value = "Select * from product p where p.name = %:productName", nativeQuery = true)
+    Product getProductByNameIgnoreCase(String productName);
 
     Page<Product> findAll(Pageable pageable);
 

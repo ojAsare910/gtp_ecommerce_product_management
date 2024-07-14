@@ -1,6 +1,5 @@
 package com.justiceasare.gtpproductmanagement.repository;
 
-import com.justiceasare.gtpproductmanagement.dto.CategoryDTO;
 import com.justiceasare.gtpproductmanagement.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
