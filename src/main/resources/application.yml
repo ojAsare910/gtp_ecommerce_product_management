@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: GTPProductManagement
+  profiles:
+    active:
+      - dev

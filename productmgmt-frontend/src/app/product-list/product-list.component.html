@@ -1,0 +1,35 @@
+<h2>Products</h2>
+<input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Search by name...">
+<a class="button" routerLink="/products/new">Add New Product</a>
+
+<div class="table-container">
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Date Added</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.name }}</td>
+      <td>{{ product.price | currency }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.createdAt | date }}</td>
+      <td>
+        <a [routerLink]="['/products/edit', product.id]" class="edit-link">Edit</a>
+        <button class="delete-button" (click)="deleteProduct(product.id!)" [disabled]="!product.id">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination">
+  <button class="pagination-button" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
+  <span>Page {{ currentPage + 1 }} of {{ totalItems / pageSize | ceil }}</span>
+  <button class="pagination-button" (click)="onPageChange(currentPage + 1)" [disabled]="(currentPage + 1) * pageSize >= totalItems">Next</button>
+</div>

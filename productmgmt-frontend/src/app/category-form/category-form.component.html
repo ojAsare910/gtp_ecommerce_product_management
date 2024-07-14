@@ -1,0 +1,11 @@
+<h2>{{ isEditMode ? 'Edit' : 'Add' }} Category</h2>
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-form">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" required>
+  </div>
+  <div class="form-actions">
+    <button type="submit" [disabled]="categoryForm.invalid">{{ isEditMode ? 'Update' : 'Create' }}</button>
+    <a routerLink="/categories" class="cancel-button">Cancel</a>
+  </div>
+</form>
