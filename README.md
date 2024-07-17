@@ -68,7 +68,14 @@ The frontend will be available at `http://localhost:4200`.
    - Edit existing categories
    - Delete categories
 
-3. RESTful API Endpoints:
+3. Class Diagram
+   - ![alt text](https://github.com/ojAsare910/gtp_ecommerce_product_management/blob/master/src/uml-diagrams/class%20diagram.png?raw=true)
+
+4. Sequence Diagram
+   - ![alt text](https://github.com/ojAsare910/gtp_ecommerce_product_management/blob/master/src/uml-diagrams/sequence-diagram.png?raw=true)
+
+
+5. RESTful API Endpoints:
 - Products:
    - GET `/api/products`: List all products
    - POST `/api/products`: Create a new product

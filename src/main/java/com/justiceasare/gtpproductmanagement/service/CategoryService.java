@@ -45,13 +45,6 @@ public class CategoryService {
         return category;
     }
 
-    public Category findCategoryByName(String name) {
-        CategoryNode node = categoryTree.search(name);
-        if (node != null) {
-            return categoryRepository.findById(node.getId()).orElse(null);
-        }
-        return null;
-    }
 
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid category id"));

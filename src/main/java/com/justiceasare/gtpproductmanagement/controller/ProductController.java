@@ -2,6 +2,7 @@ package com.justiceasare.gtpproductmanagement.controller;
 
 
 import com.justiceasare.gtpproductmanagement.dto.ProductDto;
+import com.justiceasare.gtpproductmanagement.dto.ProductIDto;
 import com.justiceasare.gtpproductmanagement.model.Product;
 import com.justiceasare.gtpproductmanagement.service.ProductService;
 import org.springframework.data.domain.Page;
@@ -20,27 +21,24 @@ public class ProductController {
         this.productService = productService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<Page<Product>> getAllProducts(Pageable pageable) {
-//        return ResponseEntity.ok(productService.getAllProducts(pageable));
-//    }
-
-    @GetMapping
-    public ResponseEntity<Page<Product>> getProducts(
+    @GetMapping()
+    public ResponseEntity<Page<ProductIDto>> getProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String searchTerm) {
 
         try {
-            Page<Product> products = productService.getProducts(page, size, searchTerm);
+            Page<ProductIDto> products = productService.getProducts(page, size, searchTerm);
             return ResponseEntity.ok(products);
         } catch (Exception e) {
+            // Log the exception
+            System.err.println("An error occurred while fetching products: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+    public ResponseEntity<ProductIDto> getProduct(@PathVariable Long id) {
         return productService.getProduct(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

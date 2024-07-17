@@ -7,35 +7,67 @@ import java.time.LocalDate;
 
 @Builder
 public class ProductDto {
-    private String name;
-    private BigDecimal price;
-    private String description;
+    private Long productId;
+    private String productName;
+    private BigDecimal productPrice;
+    private String productDescription;
+    private LocalDate productCreationDate;
     private Long categoryId;
+    private String categoryName;
 
-    public ProductDto(String name, BigDecimal price, String description, Long categoryId) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
+    public ProductDto(Long productId, String productName, BigDecimal productPrice,
+                      String productDescription, LocalDate productCreationDate,
+                      Long categoryId, String categoryName) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.productDescription = productDescription;
+        this.productCreationDate = productCreationDate;
         this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
     public ProductDto() {
     }
 
-    public String getName() {
-        return name;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public BigDecimal getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public LocalDate getProductCreationDate() {
+        return productCreationDate;
+    }
+
+    public void setProductCreationDate(LocalDate productCreationDate) {
+        this.productCreationDate = productCreationDate;
     }
 
     public Long getCategoryId() {
@@ -46,11 +78,11 @@ public class ProductDto {
         this.categoryId = categoryId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
