@@ -12,7 +12,7 @@ import { Category } from '../category.model';
 export class CategoryFormComponent implements OnInit {
   categoryForm: FormGroup;
   isEditMode = false;
-  categoryId: number | null = null;  // Initialize with null
+  categoryId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -30,15 +30,28 @@ export class CategoryFormComponent implements OnInit {
     if (idParam !== null) {
       this.categoryId = +idParam;
       this.isEditMode = true;
+      console.log('Loading category with ID:', this.categoryId);
       this.loadCategory();
     }
   }
+
+  // loadCategory(): void {
+  //   if (this.categoryId !== null) {
+  //     this.categoryService.getCategoryById(this.categoryId).subscribe(
+  //       category => {
+  //         this.categoryForm.patchValue(category);
+  //       },
+  //       error => console.error('Error loading category', error)
+  //     );
+  //   }
+  // }
 
   loadCategory(): void {
     if (this.categoryId !== null) {
       this.categoryService.getCategoryById(this.categoryId).subscribe(
         category => {
-          this.categoryForm.patchValue(category);
+          console.log('Loaded category:', category);
+          this.categoryForm.get('name')?.setValue(category.name);
         },
         error => console.error('Error loading category', error)
       );

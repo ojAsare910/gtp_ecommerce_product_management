@@ -5,6 +5,7 @@ import { ProductService } from '../product.service';
 import { CategoryService } from '../category.service';
 import { Product } from '../product.model';
 import { Category } from '../category.model';
+import {ProductDao} from "../productdao.model";
 
 @Component({
   selector: 'app-product-form',
@@ -25,9 +26,9 @@ export class ProductFormComponent implements OnInit {
     private router: Router
   ) {
     this.productForm = this.fb.group({
-      name: ['', Validators.required],
-      price: ['', Validators.required],
-      description: ['', Validators.required],
+      productName: ['', Validators.required],
+      productPrice: ['', Validators.required],
+      productDescription: ['', Validators.required],
       categoryId: ['', Validators.required]
     });
   }
@@ -54,8 +55,13 @@ export class ProductFormComponent implements OnInit {
   loadProduct(): void {
     if (this.productId !== null) {
       this.productService.getProductById(this.productId).subscribe(
-        product => {
-          this.productForm.patchValue(product);
+        (product: Product) => {
+          this.productForm.patchValue({
+            productName: product.productName,
+            productPrice: product.productPrice,
+            productDescription: product.productDescription,
+            categoryId: product.categoryId
+          });
         },
         error => console.error('Error loading product', error)
       );
@@ -64,16 +70,29 @@ export class ProductFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.productForm.valid) {
-      const product: Product = this.productForm.value;
+      const productDao: ProductDao = {
+        productName: this.productForm.get('productName')?.value || '',
+        productPrice: this.productForm.get('productPrice')?.value || 0,
+        productDescription: this.productForm.get('productDescription')?.value || '',
+        categoryId: this.productForm.get('categoryId')?.value || 0
+      };
+
       if (this.isEditMode && this.productId !== null) {
-        this.productService.updateProduct(this.productId, product).subscribe(
+        productDao.productId = this.productId;
+        this.productService.updateProduct(this.productId, productDao).subscribe(
           () => this.router.navigate(['/products']),
-          error => console.error('Error updating product', error)
+          error => {
+            console.error('Error updating product', error);
+            // You might want to show an error message to the user here
+          }
         );
       } else {
-        this.productService.createProduct(product).subscribe(
+        this.productService.createProduct(productDao).subscribe(
           () => this.router.navigate(['/products']),
-          error => console.error('Error creating product', error)
+          error => {
+            console.error('Error creating product', error);
+            // You might want to show an error message to the user here
+          }
         );
       }
     }

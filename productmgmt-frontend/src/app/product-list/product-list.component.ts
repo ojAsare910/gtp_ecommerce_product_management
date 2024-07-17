@@ -45,6 +45,6 @@ export class ProductListComponent implements OnInit {
   }
 
   onSearch(): void {
-    this.loadProducts(); // Reload products based on new search term
+    this.loadProducts();
   }
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import { Product } from './product.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import {ProductDao} from "./productdao.model";
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,17 @@ export class ProductService {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product);
+  createProduct(product: ProductDao): Observable<ProductDao> {
+    return this.http.post<ProductDao>(this.apiUrl, product);
   }
 
-  updateProduct(id: number, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
+  updateProduct(id: number, product: ProductDao): Observable<ProductDao> {
+    return this.http.put<ProductDao>(`${this.apiUrl}/${id}`, product).pipe(
+      catchError(error => {
+        console.error('Error in updateProduct:', error);
+        return throwError('Something went wrong with the update. Please try again.');
+      })
+    );
   }
 
   deleteProduct(id: number): Observable<void> {
